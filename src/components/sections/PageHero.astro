@@ -1,0 +1,168 @@
+---
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  eyebrow?: string;
+  /**
+   * Heading text. Supports inline HTML — use <em>, <span class="text-accent">, etc.
+   * directly in the string. Do NOT use a separate headingAccent prop.
+   * Example: heading="Support that meets you <em>where you are</em>."
+   */
+  heading: string;
+  body?: string[];
+  image?: { src: string; alt: string; width?: number; height?: number };
+  cta?: { text: string; href: string };
+  background?: 'base' | 'accent-light' | 'accent2-light' | 'subtle';
+  /**
+   * Layout variants:
+   *  split          — text left, image right (default)
+   *  fullbleed      — photo bg, teal gradient overlay
+   *  fullbleed-dark — photo bg, near-black overlay, shorter
+   *  panels         — teal left panel (text) + photo right panel, no overlay
+   *  centered       — no image, centered text
+   */
+  variant?: 'split' | 'fullbleed' | 'fullbleed-dark' | 'panels' | 'centered';
+  /** Hide the image on mobile (split variant only). Useful when the first content section already has an image. */
+  hideImageOnMobile?: boolean;
+}
+
+const {
+  eyebrow,
+  heading,
+  body = [],
+  image,
+  cta,
+  background = 'base',
+  variant = 'split',
+  hideImageOnMobile = false,
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:            'bg-bg-base',
+  subtle:          'bg-bg-subtle',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+};
+---
+
+{/* ─── FULLBLEED: teal gradient overlay ─── */}
+{variant === 'fullbleed' && image && (
+  <section class="relative py-20 md:py-32 lg:py-48 overflow-hidden" data-section-bg="fullbleed">
+    <img src={image.src} alt="" aria-hidden="true" width={image.width} height={image.height}
+      class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" decoding="async" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/30" />
+    <div class="container-page relative z-10">
+      <div class="max-w-2xl">
+        {eyebrow && <p class="text-sm font-semibold uppercase tracking-widest text-white/70 mb-4">{eyebrow}</p>}
+        <h1 class="text-white" set:html={heading} />
+        {body.length > 0 && (
+          <div class="mt-6 flex flex-col gap-4">
+            {body.map((p) => <p class="text-lg leading-relaxed text-white/80">{p}</p>)}
+          </div>
+        )}
+        {cta && <div class="mt-8"><Button href={cta.href} variant="outline">{cta.text}</Button></div>}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ─── FULLBLEED-DARK: near-black overlay, shorter ─── */}
+{variant === 'fullbleed-dark' && image && (
+  <section class="relative py-16 md:py-24 lg:py-36 overflow-hidden" data-section-bg="fullbleed-dark">
+    <img src={image.src} alt="" aria-hidden="true" width={image.width} height={image.height}
+      class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" decoding="async" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/90 via-[#1a1a1a]/70 to-[#1a1a1a]/20" />
+    <div class="container-page relative z-10">
+      <div class="max-w-xl">
+        {eyebrow && <p class="text-sm font-semibold uppercase tracking-widest text-white/60 mb-4">{eyebrow}</p>}
+        <h1 class="text-white" set:html={heading} />
+        {body.length > 0 && (
+          <div class="mt-5 flex flex-col gap-3">
+            {body.map((p) => <p class="text-lg leading-relaxed text-white/75">{p}</p>)}
+          </div>
+        )}
+        {cta && <div class="mt-8"><Button href={cta.href} variant="outline">{cta.text}</Button></div>}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ─── PANELS: teal left + photo right, no overlay ─── */}
+{variant === 'panels' && image && (
+  <section class="grid grid-cols-1 md:grid-cols-[55fr_45fr] min-h-[480px]" data-section-bg="panels">
+
+    {/* Text panel — left padding mirrors container-page margin */}
+    <div
+      class="bg-primary flex flex-col justify-center py-16 md:py-20 pr-10 md:pr-16"
+      style="padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 2.5rem));"
+    >
+      <div class="max-w-lg">
+        {eyebrow && <p class="text-sm font-semibold uppercase tracking-widest text-white/80 mb-4">{eyebrow}</p>}
+        <h1 class="text-white" set:html={heading} />
+        {body.length > 0 && (
+          <div class="mt-5 flex flex-col gap-3">
+            {body.map((p) => <p class="text-lg leading-relaxed text-white/90">{p}</p>)}
+          </div>
+        )}
+        {cta && <div class="mt-8"><Button href={cta.href} variant="outline">{cta.text}</Button></div>}
+      </div>
+    </div>
+
+    {/* Photo panel */}
+    <div class={`relative min-h-[300px] ${hideImageOnMobile ? 'hidden md:block' : ''}`}>
+      <img src={image.src} alt={image.alt} width={image.width} height={image.height}
+        class="absolute inset-0 w-full h-full object-cover object-center"
+        loading="eager" decoding="async" />
+    </div>
+
+  </section>
+)}
+
+{/* ─── CENTERED: no image, text centered ─── */}
+{variant === 'centered' && (
+  <section class={`py-16 md:py-24 ${bgMap[background]}`} data-section-bg={background}>
+    <div class="container-page">
+      <div class="max-w-3xl mx-auto text-center">
+        {eyebrow && <p class="text-sm font-semibold uppercase tracking-widest text-primary-dark mb-4">{eyebrow}</p>}
+        <h1 set:html={heading} />
+        {body.length > 0 && (
+          <div class="mt-6 flex flex-col gap-4">
+            {body.map((p) => <p class="text-lg leading-relaxed text-text-muted">{p}</p>)}
+          </div>
+        )}
+        {cta && <div class="mt-8"><Button href={cta.href} variant="primary">{cta.text}</Button></div>}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ─── SPLIT: text left, image right (default) ─── */}
+{(variant === 'split' || (!variant && image)) && (
+  <section class={`py-16 md:py-24 ${bgMap[background]}`} data-section-bg={background}>
+    <div class="container-page">
+      <div class={`grid grid-cols-1 gap-10 md:gap-16 ${image ? 'md:grid-cols-2 items-stretch' : 'max-w-2xl'}`}>
+
+        <div class="flex flex-col justify-center">
+          {eyebrow && <p class="text-sm font-semibold uppercase tracking-widest text-primary-dark mb-4">{eyebrow}</p>}
+          <h1 set:html={heading} />
+          {body.length > 0 && (
+            <div class="mt-6 flex flex-col gap-4">
+              {body.map((p) => <p class="text-lg leading-relaxed text-text-muted">{p}</p>)}
+            </div>
+          )}
+          {cta && <div class="mt-8"><Button href={cta.href} variant="primary">{cta.text}</Button></div>}
+        </div>
+
+        {image && (
+          <div class={`relative min-h-[260px] ${hideImageOnMobile ? 'hidden md:block' : ''}`}>
+            <div class="absolute -bottom-4 -right-4 w-2/3 h-2/3 bg-primary/10 rounded-2xl -z-10" />
+            <img src={image.src} alt={image.alt} width={image.width} height={image.height}
+              class="absolute inset-0 w-full h-full rounded-2xl object-cover object-top drop-shadow-lg"
+              loading="eager" decoding="async" />
+          </div>
+        )}
+
+      </div>
+    </div>
+  </section>
+)}

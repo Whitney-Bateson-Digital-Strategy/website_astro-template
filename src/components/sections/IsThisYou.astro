@@ -1,0 +1,101 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  intro?: string;
+  items: string[];
+  cta?: { text: string; href: string };
+  background?: 'accent' | 'primary';
+  spacing?: 'default' | 'tight';
+}
+
+const {
+  eyebrow = 'Sound familiar?',
+  heading,
+  intro,
+  items,
+  cta,
+  background = 'accent',
+  spacing = 'default',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  accent:  'bg-accent',
+  primary: 'bg-primary',
+};
+---
+
+<section class={`${spacing === 'tight' ? 'section-py-tight' : 'section-py'} ${bgMap[background]}`} data-section-bg={background}>
+  <div class="container-page">
+    <div class="max-w-2xl mx-auto text-center">
+
+      {eyebrow && (
+        <p class="text-sm font-semibold uppercase tracking-widest text-white/60 mb-3">{eyebrow}</p>
+      )}
+      <h2 class="text-white mb-4">{heading}</h2>
+      {intro && (
+        <p class="text-white/75 mb-10 leading-relaxed">{intro}</p>
+      )}
+
+    </div>
+
+    <!-- Checklist -->
+    <ul class="max-w-xl mx-auto flex flex-col gap-4 mb-10">
+      {items.map((item, i) => (
+        <li
+          class="is-this-you-item flex items-start gap-4 opacity-0"
+          style={`transition-delay: ${i * 80}ms`}
+        >
+          <span
+            class="flex-shrink-0 mt-0.5 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <Icon name="tabler:check" class="w-3.5 h-3.5 text-white" />
+          </span>
+          <span class="text-white/90 font-medium leading-relaxed text-left">{item}</span>
+        </li>
+      ))}
+    </ul>
+
+    {cta && (
+      <div class="text-center">
+        <Button href={cta.href} variant="outline">{cta.text}</Button>
+      </div>
+    )}
+
+  </div>
+</section>
+
+<style>
+  .is-this-you-item {
+    transform: translateY(0.75rem);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .is-this-you-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  function initIsThisYouAnimations() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll('.is-this-you-item').forEach((el) => observer.observe(el));
+  }
+
+  document.addEventListener('astro:page-load', initIsThisYouAnimations);
+</script>

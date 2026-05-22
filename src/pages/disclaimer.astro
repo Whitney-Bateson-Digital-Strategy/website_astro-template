@@ -1,0 +1,45 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import LegalContent from '~/components/sections/LegalContent.astro';
+
+const metadata = {
+  title: 'Disclaimer — Whitney Bateson, RDN',
+  description: 'Health and medical disclaimer for whitneybateson.com',
+  noindex: true,
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  <PageHero
+    variant="centered"
+    background="subtle"
+    heading="Disclaimer"
+  />
+
+  <LegalContent lastUpdated="[Month Year]">
+
+    <p><strong>PLACEHOLDER — Replace this entire section with your actual Disclaimer before going live.</strong> For a health and wellness practice, a proper disclaimer should be reviewed by a healthcare attorney familiar with your state's dietitian licensing laws.</p>
+
+    <h2>No Professional Relationship</h2>
+    <p>The information provided on this website is for general informational and educational purposes only. Use of this website does not create a dietitian-client, nutritionist-client, or any other professional relationship between you and Whitney Bateson, RDN.</p>
+
+    <h2>Not a Substitute for Professional Advice</h2>
+    <p>Nothing on this website should be construed as medical or nutritional advice specific to your individual situation. Always consult with a qualified healthcare professional — including a registered dietitian — before making changes to your diet, exercise, or health regimen, particularly if you have a medical condition or are taking medications.</p>
+
+    <h2>Results Not Guaranteed</h2>
+    <p>Any testimonials, results, or outcomes described on this website represent individual experiences and are not guarantees of what any specific person may achieve. Results will vary based on individual circumstances, health history, and adherence.</p>
+
+    <h2>External Links</h2>
+    <p>This website may contain links to external websites. We are not responsible for the content, accuracy, or privacy practices of those sites. Linking to external resources does not constitute an endorsement.</p>
+
+    <h2>Accuracy of Information</h2>
+    <p>While we make every effort to ensure the information on this website is accurate and up to date, nutrition science evolves and individual needs vary. We make no warranties or representations regarding the completeness or accuracy of the content.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about this Disclaimer, please contact us at <a href="mailto:hello@whitneybateson.com">hello@whitneybateson.com</a>.</p>
+
+  </LegalContent>
+
+</Layout>

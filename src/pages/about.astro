@@ -1,0 +1,185 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import whitneyAbout from '~/assets/images/Whitney Bateson Feb 2020-75.jpg';
+import whitneyAbout2 from '~/assets/images/Whitney Bateson Feb 2020-42.jpg';
+import PageHero from '~/components/sections/PageHero.astro';
+import AboutStory from '~/components/sections/AboutStory.astro';
+import FunFacts from '~/components/sections/FunFacts.astro';
+import Credentials from '~/components/sections/Credentials.astro';
+import ExploreMore from '~/components/sections/ExploreMore.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+
+const metadata = {
+  title: 'About Whitney',
+  description: 'Meet Whitney Bateson, RDN — a Registered Dietitian Nutritionist helping women in Dallas–Fort Worth build a sustainable, guilt-free relationship with food.',
+};
+---
+
+<Layout metadata={metadata}>
+
+  {/* 1. Hero */}
+  <PageHero
+    background="accent2-light"
+    eyebrow="About Whitney"
+    heading="I help women stop fighting food and start <span class='text-accent'>feeling free.</span>"
+    body={[
+      "I'm a Registered Dietitian Nutritionist based in Dallas–Fort Worth — and I've sat exactly where you're sitting. Frustrated, exhausted, and wondering why something that should be simple feels so hard.",
+      "This work isn't just my career. It's personal.",
+    ]}
+    image={{
+      src: whitneyAbout.src,
+      alt: 'Whitney Bateson, Registered Dietitian Nutritionist',
+      width: whitneyAbout.width,
+      height: whitneyAbout.height,
+    }}
+  />
+
+  {/* 2. Story */}
+  <AboutStory
+    name="Whitney Bateson, RDN"
+    title="Registered Dietitian Nutritionist · Dallas–Fort Worth, TX"
+    intro={[
+      "My early years in nutrition weren't perfect. Like a lot of the women I work with now, I spent years chasing the 'right' way to eat — tracking, restricting, and starting over every Monday. I knew exactly what I was supposed to do, and I still couldn't make it stick.",
+      "It wasn't until I stopped following someone else's rules that things actually changed. I realized that sustainable eating isn't about perfection or willpower — it's about building something flexible enough to work with your real life.",
+      "That shift changed everything for me, and it's the foundation for everything I do with clients today. I bring the clinical knowledge, yes — but I also bring the lived experience of someone who's been in the messy middle of it.",
+    ]}
+    image={{
+      src: whitneyAbout2.src,
+      alt: 'Whitney Bateson in her element',
+      width: whitneyAbout2.width,
+      height: whitneyAbout2.height,
+    }}
+    cta={{ text: 'Explore my services', href: '/services' }}
+    cards={[
+      {
+        heading: 'Why I do this work',
+        body: "Because I spent too many years feeling like food was something to manage, not enjoy. I know what it's like to be educated about nutrition and still feel stuck — and I know there's a better way. I want every client to find what I eventually found: a relationship with food that feels effortless.",
+      },
+      {
+        heading: 'My approach',
+        body: "Evidence-based, flexible, and built around your actual life — not an ideal version of it. I don't believe in rigid plans or lists of forbidden foods. I believe in helping you understand your own body well enough that you stop needing someone else to tell you what to eat.",
+      },
+      {
+        heading: 'More about me',
+        body: "When I'm not working with clients, you'll find me cooking something new on a Sunday, taking long walks with my dog, or deeply invested in a good book. I live in the DFW area and see clients both in-person and virtually — because good support shouldn't be limited by geography.",
+      },
+    ]}
+    background="base"
+  />
+
+  {/* 3. Fun Facts — flip cards */}
+  <FunFacts
+    eyebrow="Get to know me"
+    heading="A few things about me."
+    facts={[
+      {
+        icon: 'tabler:coffee',
+        label: 'My morning ritual',
+        fact: 'Oat milk latte, always. I have strong opinions about coffee and no apologies.',
+      },
+      {
+        icon: 'tabler:book',
+        label: 'Currently reading',
+        fact: 'I keep a running list and rotate between nutrition research, memoirs, and the occasional cozy mystery.',
+      },
+      {
+        icon: 'tabler:dog',
+        label: 'Best coworker',
+        fact: 'My dog, who attends all virtual sessions uninvited and is universally beloved by clients.',
+      },
+      {
+        icon: 'tabler:plant',
+        label: 'Secret hobby',
+        fact: "I'm convinced I have a gift for growing herbs. My rosemary disagrees. We're working through it.",
+      },
+      {
+        icon: 'tabler:heart',
+        label: 'What fills my cup',
+        fact: 'Long dinners with people I love, preferably with something delicious on the table and nowhere to be.',
+      },
+      {
+        icon: 'tabler:world',
+        label: 'Dream trip',
+        fact: 'Italy — specifically for the food, the pace, and the very correct cultural attitude toward mealtimes.',
+      },
+    ]}
+    background="accent"
+  />
+
+  {/* 4. Credentials */}
+  <Credentials
+    eyebrow="Background"
+    heading="Training & credentials."
+    groups={[
+      {
+        label: 'Education',
+        icon: 'tabler:school',
+        items: [
+          'M.S. in Nutrition Science — University of North Texas',
+          'B.S. in Dietetics — Texas Christian University',
+          'Dietetic Internship — Parkland Health & Hospital System',
+        ],
+      },
+      {
+        label: 'Credentials & Certifications',
+        icon: 'tabler:certificate',
+        items: [
+          'Registered Dietitian Nutritionist (RDN)',
+          'Licensed Dietitian (LD) — State of Texas',
+          'Certified Intuitive Eating Counselor',
+        ],
+      },
+      {
+        label: 'Professional Memberships',
+        icon: 'tabler:users',
+        items: [
+          'Academy of Nutrition and Dietetics',
+          'Texas Academy of Nutrition and Dietetics',
+          'Dietitians in Integrative and Functional Medicine (DIFM)',
+        ],
+      },
+    ]}
+    background="base"
+  />
+
+  {/* 5. Explore More */}
+  <ExploreMore
+    eyebrow="Keep exploring"
+    heading="There's more to discover."
+    cards={[
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80',
+          alt: 'Dietitian meeting with a client',
+        },
+        label: 'Work with me',
+        heading: 'See how we can work together.',
+        description: 'From one-on-one counseling to group programs — find the right fit for where you are right now.',
+        href: '/services',
+        ctaLabel: 'View services',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+          alt: 'Colorful fresh vegetables and healthy ingredients',
+        },
+        label: 'Free resource',
+        heading: '5 Nutrition Myths That Are Keeping You Stuck.',
+        description: "Confused by conflicting advice? This free guide breaks down the five most common myths — and what to do instead.",
+        href: '#lead-magnet',
+        ctaLabel: 'Get the free guide',
+      },
+    ]}
+    background="subtle"
+  />
+
+  {/* 6. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to get started?"
+    heading="You don't have to figure this out alone."
+    subheading="Book a free 20-minute discovery call and let's talk about what's been getting in the way."
+    primaryCta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

@@ -1,0 +1,33 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/common/Header.astro';
+import Footer from '~/components/common/Footer.astro';
+import LeadMagnetMini from '~/components/sections/LeadMagnetMini.astro';
+import { SkipLink } from 'accessible-astro-components';
+
+import { headerData, footerData } from '~/navigation';
+
+import type { MetaData } from '~/types';
+
+export interface Props {
+  metadata?: MetaData;
+  /** Set to false on pages where the lead magnet strip shouldn't appear (legal pages, booking page, etc.) */
+  showLeadMagnet?: boolean;
+}
+
+const { metadata, showLeadMagnet = true } = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <SkipLink />
+  <slot name="header">
+    <Header links={headerData.links} actions={headerData.actions} />
+  </slot>
+  <main id="main-content">
+    <slot />
+  </main>
+  {showLeadMagnet && <LeadMagnetMini />}
+  <slot name="footer">
+    <Footer {...footerData} />
+  </slot>
+</Layout>

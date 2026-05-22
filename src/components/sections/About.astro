@@ -1,0 +1,81 @@
+---
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  body: string[];
+  image: { src: string; alt: string; width?: number; height?: number };
+  cta: { text: string; href: string };
+  panelBackground?: 'primary' | 'accent' | 'accent2' | 'accent-light' | 'accent2-light' | 'subtle';
+  imagePosition?: 'left' | 'right';
+}
+
+const {
+  eyebrow,
+  heading,
+  body,
+  image,
+  cta,
+  panelBackground = 'primary',
+  imagePosition = 'left',
+} = Astro.props;
+
+const panelBgMap: Record<string, string> = {
+  primary:         'bg-primary',
+  accent:          'bg-accent',
+  accent2:         'bg-accent2',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  subtle:          'bg-bg-subtle',
+};
+
+const isDark = panelBackground === 'primary' || panelBackground === 'accent' || panelBackground === 'accent2';
+---
+
+<SectionWrapper class="section-py bg-bg-base" bg="base">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden min-h-[360px]">
+
+    <!-- Photo column -->
+    <div class={`min-h-[260px] md:min-h-0 ${imagePosition === 'right' ? 'md:order-last' : ''}`}>
+      <img
+        src={image.src}
+        alt={image.alt}
+        class="w-full h-full object-cover object-top"
+        width={image.width}
+        height={image.height}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Colored content panel -->
+    <div class={`flex items-center ${panelBgMap[panelBackground]}`}>
+      <div class="px-6 py-8 md:px-10 md:py-10 lg:px-14">
+
+        {eyebrow && (
+          <p class={`text-sm font-semibold uppercase tracking-widest mb-3 ${isDark ? 'text-white/60' : 'text-accent'}`}>
+            {eyebrow}
+          </p>
+        )}
+
+        <h2 class={`mb-5 ${isDark ? 'text-white' : ''}`}>{heading}</h2>
+
+        <div class="flex flex-col gap-3 mb-7">
+          {body.map((paragraph) => (
+            <p class={`leading-relaxed ${isDark ? 'text-white/80' : 'text-text-muted'}`}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+
+      </div>
+    </div>
+
+  </div>
+
+</SectionWrapper>

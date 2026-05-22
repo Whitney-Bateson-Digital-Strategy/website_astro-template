@@ -1,0 +1,41 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import SchedulerEmbed from '~/components/sections/SchedulerEmbed.astro';
+
+const metadata = {
+  title: 'Book a Free Discovery Call — Whitney Bateson, RDN',
+  description: 'Schedule a free 20-minute discovery call with Whitney Bateson, Registered Dietitian Nutritionist. No commitment, no pressure — just a conversation.',
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  {/* 1. Hero */}
+  <PageHero
+    variant="centered"
+    background="accent-light"
+    eyebrow="Free discovery call"
+    heading="Let's figure out your next step."
+    body={[
+      "Pick a time that works for you. We'll spend 20 minutes talking through where you are, what you've tried, and whether working together makes sense.",
+    ]}
+  />
+
+  {/* 2. Scheduler embed — paste your embed code between the tags below */}
+  <SchedulerEmbed background="base">
+    {/*
+      PASTE YOUR SCHEDULER EMBED CODE HERE.
+      Delete this comment and replace with your embed code.
+
+      Example (Calendly inline widget):
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/your-username/discovery-call"
+          style="min-width:320px;height:700px;"
+        ></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    */}
+  </SchedulerEmbed>
+
+</Layout>

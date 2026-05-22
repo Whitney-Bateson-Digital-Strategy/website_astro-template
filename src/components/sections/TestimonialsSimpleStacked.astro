@@ -1,0 +1,98 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  heading?: string;
+  testimonials: {
+    quote: string;
+    name: string;
+    detail?: string;
+  }[];
+  seeMoreLabel?: string;
+  seeMoreHref?: string;
+  icon?: string;
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light';
+}
+
+const {
+  heading = "What clients are saying",
+  testimonials,
+  seeMoreLabel = 'See more client love',
+  seeMoreHref,
+  icon = 'tabler:heart',
+  background = 'base',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:            'bg-bg-base',
+  subtle:          'bg-bg-subtle',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+};
+---
+
+<section
+  class={`section-py ${bgMap[background]}`}
+  data-section-bg={background}
+  itemscope
+  itemtype="https://schema.org/ItemList"
+>
+  <div class="container-page">
+
+    <!-- Small heading row -->
+    <div class="flex items-center justify-center gap-3 mb-5">
+      <Icon name={icon} class="w-5 h-5 text-primary-dark flex-shrink-0" aria-hidden="true" />
+      <p class="text-sm font-semibold uppercase tracking-widest text-primary-dark">{heading}</p>
+    </div>
+
+    <!-- Stacked testimonials with dividers -->
+    <div class="flex flex-col divide-y divide-border max-w-2xl mx-auto">
+      {testimonials.map((t, i) => (
+        <blockquote
+          itemprop="itemListElement"
+          itemscope
+          itemtype="https://schema.org/Review"
+          class="flex flex-col items-center text-center gap-2 py-6 first:pt-0 last:pb-0"
+        >
+          <meta itemprop="position" content={String(i + 1)} />
+          <div itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+            <meta itemprop="ratingValue" content="5" />
+            <meta itemprop="bestRating" content="5" />
+          </div>
+          <p
+            itemprop="reviewBody"
+            class="text-[1.05rem] leading-relaxed text-text-base font-medium italic"
+          >
+            &ldquo;{t.quote}&rdquo;
+          </p>
+          <footer
+            itemprop="author"
+            itemscope
+            itemtype="https://schema.org/Person"
+          >
+            <span itemprop="name" class="text-sm font-semibold text-text-muted tracking-wide">
+              — {t.name}
+            </span>
+            {t.detail && (
+              <span class="text-sm text-text-muted">, {t.detail}</span>
+            )}
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+
+    <!-- See more link -->
+    {seeMoreHref && (
+      <div class="mt-7 text-center">
+        <a
+          href={seeMoreHref}
+          class="text-base font-semibold text-accent hover:text-accent/75 transition-colors inline-flex items-center gap-1.5"
+        >
+          {seeMoreLabel}
+          <Icon name="tabler:arrow-right" class="w-4 h-4" aria-hidden="true" />
+        </a>
+      </div>
+    )}
+
+  </div>
+</section>

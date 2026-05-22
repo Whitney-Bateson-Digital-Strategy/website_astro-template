@@ -1,0 +1,14 @@
+---
+import { ANALYTICS } from 'astrowind:config';
+
+const gaId = ANALYTICS?.vendors?.googleAnalytics?.id;
+---
+
+{gaId && (
+  <script is:inline define:vars={{ gaId }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', gaId);
+  </script>
+)}

@@ -1,0 +1,121 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  subheading?: string;
+  primaryCta: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+  icon?: string;
+  background?: 'primary' | 'accent' | 'accent2' | 'base' | 'subtle';
+}
+
+const {
+  eyebrow,
+  heading,
+  subheading,
+  primaryCta,
+  secondaryCta,
+  icon = 'tabler:leaf',
+  background = 'primary',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  primary: 'bg-primary',
+  accent:  'bg-accent',
+  accent2: 'bg-accent2',
+  base:    'bg-bg-base',
+  subtle:  'bg-bg-subtle',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+---
+
+<SectionWrapper class={`section-py ${bgMap[background]}`} bg={background}>
+  <div class="max-w-2xl mx-auto text-center flex flex-col items-center gap-6">
+
+    <!-- Decorative icon -->
+    <div data-cta-el class="opacity-0">
+      <Icon
+        name={icon}
+        class={`w-10 h-10 ${isDark ? 'text-white/30' : 'text-primary/30'}`}
+        aria-hidden="true"
+      />
+    </div>
+
+    <!-- Eyebrow with flanking lines -->
+    {eyebrow && (
+      <div data-cta-el class="opacity-0 flex items-center gap-3">
+        <span class={`h-px w-10 ${isDark ? 'bg-white/30' : 'bg-border'}`} />
+        <p class={`text-sm font-semibold uppercase tracking-widest ${isDark ? 'text-white/80' : 'text-accent'}`}>
+          {eyebrow}
+        </p>
+        <span class={`h-px w-10 ${isDark ? 'bg-white/30' : 'bg-border'}`} />
+      </div>
+    )}
+
+    <!-- Heading -->
+    <div data-cta-el class="opacity-0">
+      <h2 class={isDark ? 'text-white' : ''}>{heading}</h2>
+    </div>
+
+    <!-- Subheading -->
+    {subheading && (
+      <div data-cta-el class="opacity-0">
+        <p class={`text-lg leading-relaxed ${isDark ? 'text-white/90' : 'text-text-muted'}`}>
+          {subheading}
+        </p>
+      </div>
+    )}
+
+    <!-- CTAs -->
+    <div data-cta-el class="opacity-0 flex flex-wrap justify-center gap-4 pt-2">
+      <Button href={primaryCta.href} variant={isDark ? 'outline' : 'primary'}>
+        {primaryCta.text}
+      </Button>
+      {secondaryCta && (
+        <Button href={secondaryCta.href} variant="link">
+          {secondaryCta.text}
+        </Button>
+      )}
+    </div>
+
+  </div>
+</SectionWrapper>
+
+<style>
+  [data-cta-el] {
+    transform: translateY(1rem);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  [data-cta-el].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  function initCtaAnimations() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll('[data-cta-el]').forEach((el, i) => {
+      (el as HTMLElement).style.transitionDelay = `${i * 120}ms`;
+      observer.observe(el);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCtaAnimations);
+</script>

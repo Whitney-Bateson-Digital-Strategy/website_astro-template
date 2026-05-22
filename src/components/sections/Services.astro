@@ -1,0 +1,83 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Service {
+  image: { src: string; alt: string; width?: number; height?: number };
+  label: string;
+  name: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+export interface Props {
+  heading: string;
+  intro?: string;
+  services: Service[];
+  background?: 'base' | 'subtle' | 'accent-light' | 'primary' | 'accent';
+}
+
+const { heading, intro, services, background = 'base' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:           'bg-bg-base',
+  subtle:         'bg-bg-subtle',
+  'accent-light': 'bg-accent-light',
+  primary:        'bg-primary',
+  accent:         'bg-accent',
+};
+
+const isDark = background === 'primary' || background === 'accent';
+---
+
+<SectionWrapper class={`section-py ${bgMap[background]}`} bg={background}>
+
+  <div class="mb-12 md:mb-16">
+    <h2 class={isDark ? 'text-white' : ''}>{heading}</h2>
+    {intro && (
+      <p class={`mt-4 max-w-2xl ${isDark ? 'text-white/75' : 'text-text-muted'}`}>{intro}</p>
+    )}
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {services.map((service) => (
+      <div class={`flex flex-col rounded-2xl overflow-hidden ${isDark ? 'bg-white/10' : 'bg-bg-card'} shadow-md`}>
+
+        <img
+          src={service.image.src}
+          alt={service.image.alt}
+          class="w-full h-52 object-cover"
+          width={service.image.width}
+          height={service.image.height}
+          loading="lazy"
+          decoding="async"
+        />
+
+        <div class="flex flex-col gap-4 p-8 flex-1">
+          <div>
+            <p class={`text-sm font-semibold uppercase tracking-widest mb-2 ${isDark ? 'text-white/60' : 'text-primary-dark'}`}>
+              {service.label}
+            </p>
+            <h3 class={isDark ? 'text-white' : ''}>{service.name}</h3>
+          </div>
+
+          <p class={`leading-relaxed flex-1 ${isDark ? 'text-white/75' : 'text-text-muted'}`}>
+            {service.description}
+          </p>
+
+          <a
+            href={service.ctaHref}
+            aria-label={`${service.ctaLabel} about ${service.name}`}
+            class={`inline-flex items-center gap-1.5 font-medium transition-colors duration-150 ${isDark ? 'text-white hover:text-white/75' : 'text-accent hover:text-accent/75'}`}
+          >
+            {service.ctaLabel}
+            <Icon name="tabler:arrow-right" class="w-4 h-4" aria-hidden="true" />
+          </a>
+        </div>
+
+      </div>
+    ))}
+  </div>
+
+</SectionWrapper>

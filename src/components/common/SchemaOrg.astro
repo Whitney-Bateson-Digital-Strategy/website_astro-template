@@ -1,0 +1,102 @@
+---
+/**
+ * SchemaOrg.astro — Site-wide structured data (JSON-LD)
+ *
+ * Included once in Layout.astro <head>. Adds:
+ *   - WebSite (enables sitelinks search box eligibility)
+ *   - LocalBusiness / HealthAndBeautyBusiness (local SEO, maps)
+ *   - Person (entity disambiguation for Whitney)
+ *
+ * Page-level schemas (FAQPage, Service) live in their own components.
+ */
+
+import { SITE } from 'astrowind:config';
+
+const siteUrl = SITE?.site ?? 'https://whitneybateson.com';
+
+// ─── UPDATE ALL FIELDS BELOW FOR EACH CLIENT ─────────────────────────────────
+// See: New Client Setup Checklist in Notion
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: '[CLIENT NAME]',           // e.g. 'Sarah Johnson, RD'
+  url: siteUrl,
+  description: '[Site description]',
+};
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'HealthAndBeautyBusiness'],
+  '@id': `${siteUrl}/#business`,
+  name: '[CLIENT NAME]',
+  description: '[Practice description]',
+  url: siteUrl,
+  telephone: '',                   // e.g. '+12145550100' — remove field if not used
+  email: '[CLIENT EMAIL]',         // e.g. 'hello@sarahjohnson.com'
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '[CITY]',     // e.g. 'Dallas'
+    addressRegion: '[STATE]',      // e.g. 'TX'
+    addressCountry: 'US',
+  },
+  areaServed: [
+    // List states/regions where they accept clients
+    { '@type': 'State', name: '[STATE 1]' },
+    { '@type': 'State', name: '[STATE 2]' },
+  ],
+  priceRange: '$$',                // '$' | '$$' | '$$$'
+  sameAs: [
+    // Add client's social media profile URLs
+    // 'https://instagram.com/[handle]',
+    // 'https://facebook.com/[handle]',
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: '[SERVICE CATEGORY NAME]', // e.g. 'Nutrition Counseling Services'
+    itemListElement: [
+      // Add one entry per service
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: '[SERVICE 1 NAME]',
+          description: '[SERVICE 1 DESCRIPTION]',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: '[SERVICE 2 NAME]',
+          description: '[SERVICE 2 DESCRIPTION]',
+        },
+      },
+    ],
+  },
+};
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}/#person`,
+  name: '[PRACTITIONER FULL NAME]',      // e.g. 'Sarah Johnson'
+  jobTitle: '[JOB TITLE]',               // e.g. 'Registered Dietitian'
+  honorificSuffix: '[CREDENTIAL]',       // e.g. 'RD' or 'RDN' or 'MS, RD'
+  worksFor: { '@id': `${siteUrl}/#business` },
+  url: `${siteUrl}/about`,
+  sameAs: [
+    // 'https://instagram.com/[handle]',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '[CITY]',
+    addressRegion: '[STATE]',
+    addressCountry: 'US',
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />

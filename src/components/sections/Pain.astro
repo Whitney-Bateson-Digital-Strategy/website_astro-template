@@ -1,0 +1,114 @@
+---
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+
+export interface Props {
+  /**
+   * Heading text. Supports inline HTML — use <em>, <span class="text-accent2">, etc. directly.
+   * Example: heading="Does any of this sound <em>familiar?</em>"
+   */
+  heading: string;
+  intro?: string;
+  struggles: string[];
+  closing?: string;
+  cta?: { text: string; href: string };
+  image?: { src: string; alt: string; width?: number; height?: number };
+  background?: 'subtle' | 'base' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+}
+
+const { heading, intro, struggles, closing, cta, image, background = 'primary' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  subtle:          'bg-bg-subtle',
+  base:            'bg-bg-base',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary:         'bg-primary',
+  accent:          'bg-accent',
+  accent2:         'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+---
+
+<SectionWrapper class={`section-py ${bgMap[background]}`} bg={background}>
+
+  {image ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-stretch">
+
+      <div class="self-stretch">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="w-full h-full rounded-2xl object-cover min-h-[260px]"
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <div>
+        <h2 class={isDark ? 'text-white' : ''} set:html={heading} />
+        {intro && (
+          <p class={`mt-4 mb-8 leading-relaxed ${isDark ? 'text-white/75' : 'text-text-muted'}`}>
+            {intro}
+          </p>
+        )}
+        <ul class="flex flex-col gap-4">
+          {struggles.map((struggle) => (
+            <li class={`flex gap-3 items-start leading-relaxed ${isDark ? 'text-white/90' : 'text-text-base'}`}>
+              <span
+                class={`mt-[0.45rem] w-1.5 h-1.5 rounded-full flex-shrink-0 ${isDark ? 'bg-white/50' : 'bg-primary'}`}
+                aria-hidden="true"
+              />
+              {struggle}
+            </li>
+          ))}
+        </ul>
+        {closing && (
+          <p class={`mt-8 leading-relaxed font-medium ${isDark ? 'text-white/90' : 'text-text-base'}`}>
+            {closing}
+          </p>
+        )}
+        {cta && (
+          <div class="mt-6">
+            <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+          </div>
+        )}
+      </div>
+
+    </div>
+  ) : (
+    <div class="max-w-2xl mx-auto">
+      <h2 class={isDark ? 'text-white' : ''} set:html={heading} />
+      {intro && (
+        <p class={`mt-4 mb-8 leading-relaxed ${isDark ? 'text-white/75' : 'text-text-muted'}`}>
+          {intro}
+        </p>
+      )}
+      <ul class="flex flex-col gap-4">
+        {struggles.map((struggle) => (
+          <li class={`flex gap-3 items-start leading-relaxed ${isDark ? 'text-white/90' : 'text-text-base'}`}>
+            <span
+              class={`mt-[0.45rem] w-1.5 h-1.5 rounded-full flex-shrink-0 ${isDark ? 'bg-white/50' : 'bg-primary'}`}
+              aria-hidden="true"
+            />
+            {struggle}
+          </li>
+        ))}
+      </ul>
+      {closing && (
+        <p class={`mt-8 leading-relaxed font-medium ${isDark ? 'text-white/90' : 'text-text-base'}`}>
+          {closing}
+        </p>
+      )}
+      {cta && (
+        <div class="mt-6">
+          <Button href={cta.href} variant={isDark ? 'outline' : 'primary'}>{cta.text}</Button>
+        </div>
+      )}
+    </div>
+  )}
+
+</SectionWrapper>

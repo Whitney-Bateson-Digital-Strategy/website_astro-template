@@ -1,0 +1,45 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import LegalContent from '~/components/sections/LegalContent.astro';
+
+const metadata = {
+  title: 'Privacy Policy — Whitney Bateson, RDN',
+  description: 'Privacy Policy for whitneybateson.com',
+  noindex: true,
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  <PageHero
+    variant="centered"
+    background="subtle"
+    heading="Privacy Policy"
+  />
+
+  <LegalContent lastUpdated="[Month Year]">
+
+    <p><strong>PLACEHOLDER — Replace this entire section with your actual Privacy Policy before going live.</strong> Your attorney or a privacy policy generator (Termly, iubenda, etc.) can produce one tailored to your practice and applicable state laws.</p>
+
+    <h2>Information We Collect</h2>
+    <p>We collect information you provide directly to us, such as when you fill out a contact form, book an appointment, or sign up for our email list. This may include your name, email address, phone number, and health-related information you choose to share.</p>
+
+    <h2>How We Use Your Information</h2>
+    <p>We use the information we collect to provide, maintain, and improve our services, communicate with you, and comply with legal obligations. We do not sell your personal information to third parties.</p>
+
+    <h2>Cookies and Tracking</h2>
+    <p>Our website may use cookies and similar tracking technologies to improve your browsing experience and analyze site traffic. You can instruct your browser to refuse all cookies or indicate when a cookie is being sent.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>We may use third-party services such as scheduling software, email marketing platforms, and analytics tools. These services have their own privacy policies governing the use of your information.</p>
+
+    <h2>HIPAA Notice</h2>
+    <p>This website is not a covered entity under HIPAA. However, we take the privacy of your health information seriously. Any protected health information shared through formal intake or clinical channels is governed by a separate Notice of Privacy Practices provided at the time of service.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about this Privacy Policy, please contact us at <a href="mailto:hello@whitneybateson.com">hello@whitneybateson.com</a>.</p>
+
+  </LegalContent>
+
+</Layout>

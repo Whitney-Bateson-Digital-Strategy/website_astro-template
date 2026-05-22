@@ -1,0 +1,60 @@
+---
+export interface Props {
+  lastUpdated?: string;
+}
+
+const { lastUpdated } = Astro.props;
+---
+
+<section class="bg-bg-base" data-section-bg="base">
+  <div class="container-page py-16 md:py-20">
+    <div class="max-w-3xl mx-auto prose-legal">
+      {lastUpdated && (
+        <p class="text-sm text-text-muted mb-8">Last updated: {lastUpdated}</p>
+      )}
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Prose styles scoped to legal pages */
+  .prose-legal :global(h2) {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-legal :global(h3) {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-legal :global(p) {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .prose-legal :global(ul) {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .prose-legal :global(li) {
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    margin-bottom: 0.25rem;
+  }
+  .prose-legal :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-legal :global(strong) {
+    color: var(--color-text-heading);
+    font-weight: 600;
+  }
+</style>

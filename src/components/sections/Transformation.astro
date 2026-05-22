@@ -1,0 +1,65 @@
+---
+import { Icon } from 'astro-icon/components';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface Outcome {
+  icon: string;
+  headline: string;
+  description: string;
+}
+
+export interface Props {
+  heading: string;
+  intro?: string;
+  outcomes: Outcome[];
+  closingLine?: string;
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'primary' | 'accent' | 'accent2';
+}
+
+const { heading, intro, outcomes, closingLine, background = 'accent-light' } = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:            'bg-bg-base',
+  subtle:          'bg-bg-subtle',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  primary:         'bg-primary',
+  accent:          'bg-accent',
+  accent2:         'bg-accent2',
+};
+
+const isDark = background === 'primary' || background === 'accent' || background === 'accent2';
+---
+
+<SectionWrapper class={`section-py ${bgMap[background]}`} bg={background}>
+
+  <div class="max-w-xl mx-auto text-center mb-10 md:mb-14">
+    <h2 class={isDark ? 'text-white' : ''}>{heading}</h2>
+    {intro && (
+      <p class={`mt-4 ${isDark ? 'text-white/75' : 'text-text-muted'}`}>{intro}</p>
+    )}
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-12 max-w-4xl mx-auto">
+    {outcomes.map((outcome) => (
+      <div class="flex flex-col gap-3">
+        <Icon
+          name={outcome.icon}
+          class={`w-7 h-7 ${isDark ? 'text-white/70' : 'text-accent'}`}
+          aria-hidden="true"
+        />
+        <h3 class={isDark ? 'text-white' : ''}>{outcome.headline}</h3>
+        <p class={`leading-relaxed ${isDark ? 'text-white/75' : 'text-text-muted'}`}>
+          {outcome.description}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  {closingLine && (
+    <p class={`mt-16 text-center max-w-lg mx-auto italic ${isDark ? 'text-white/60' : 'text-text-muted'}`}>
+      {closingLine}
+    </p>
+  )}
+
+</SectionWrapper>

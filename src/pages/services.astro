@@ -1,0 +1,233 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import ServicesDetail from '~/components/sections/ServicesDetail.astro';
+import IsThisYou from '~/components/sections/IsThisYou.astro';
+import Process from '~/components/sections/Process.astro';
+import Testimonials from '~/components/sections/Testimonials.astro';
+import FAQ from '~/components/sections/FAQ.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+
+const metadata = {
+  title: 'Nutrition Counseling Services',
+  description: 'Work with Whitney one-on-one, in a group program, or for a single intensive session. Evidence-based nutrition counseling based in Dallas–Fort Worth, available virtually.',
+};
+---
+
+<Layout metadata={metadata}>
+
+  {/* 1. Hero */}
+  <PageHero
+    variant="panels"
+    hideImageOnMobile={true}
+    eyebrow="Work with me"
+    heading="Support that meets you <em>where you are</em>."
+    body={[
+      "Whether you're just starting to untangle your relationship with food or you've been at this for years — there's a path that fits.",
+      "No rigid programs. No one-size-fits-all plans. Just support built around your actual life.",
+    ]}
+    cta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=600&q=80',
+      alt: 'Whitney in a warm consultation setting',
+      width: 800,
+      height: 600,
+    }}
+  />
+
+
+  {/* 2. Service rows */}
+  <ServicesDetail
+    background="base"
+    services={[
+      {
+        id: 'one-on-one',
+        label: '1:1 Coaching',
+        name: 'Personalized Nutrition Counseling',
+        tagline: 'For the woman who wants real answers — not another generic meal plan.',
+        description: "This is where we do the deep work. Together, we'll look at what's actually getting in your way — the habits, the history, the beliefs about food you didn't even know you had — and build something that works for your real life. Sessions are held virtually or in-person in the DFW area.",
+        isForYou: [
+          "You've tried tracking and restricting but nothing sticks",
+          'You want to stop thinking about food all the time',
+          "You're dealing with a health condition that needs personalized guidance",
+          'You want support that actually knows you',
+        ],
+        includes: [
+          'Comprehensive initial assessment (75 min)',
+          'Bi-weekly 45-minute follow-up sessions',
+          'Personalized nutrition plan — flexible, not rigid',
+          'Between-session messaging support',
+          'Resources, tools, and habit-building frameworks',
+        ],
+        cta: { text: 'Book a Free Discovery Call', href: '/booking' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=600&q=80',
+          alt: 'Whitney meeting with a client over video call',
+          width: 800,
+          height: 600,
+        },
+      },
+      {
+        id: 'group',
+        label: 'Group Program',
+        name: 'The Sustainable Table',
+        tagline: 'Everything you need to build a better relationship with food — with the support of a community around you.',
+        description: "A 10-week live group program for women who are ready to stop starting over. You'll get the same evidence-based framework as 1:1 coaching, plus the energy and accountability of doing it alongside others who get it.",
+        isForYou: [
+          'You thrive in community and learn well with others',
+          "You want expert guidance but 1:1 isn't in the budget right now",
+          'You want structure with room to make it your own',
+          "You're ready to commit to 10 weeks of real change",
+        ],
+        includes: [
+          'Weekly 90-minute live group sessions (10 weeks)',
+          'Private community space between sessions',
+          'Full curriculum: workbooks, audio guides, and tools',
+          'Two 1:1 check-ins with Whitney during the program',
+          'Access to session recordings for the program duration',
+        ],
+        cta: { text: 'Join the Waitlist', href: '/contact' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=800&h=600&q=80',
+          alt: 'Women gathered around a table sharing a meal',
+          width: 800,
+          height: 600,
+        },
+      },
+      {
+        id: 'intensive',
+        label: 'Single Session',
+        name: 'Nutrition Intensive',
+        tagline: 'One focused session to get clear, get answers, and leave with a real plan.',
+        description: "Not ready for ongoing coaching, or just need a reset? The Nutrition Intensive is a single 90-minute deep-dive where we tackle your most pressing questions, bust through the confusion, and leave you with concrete next steps — no follow-up commitment required.",
+        isForYou: [
+          'You have specific questions and want expert answers',
+          "You've done the work before and just need a tune-up",
+          'You want to try working together before committing to a package',
+          'Your schedule makes ongoing sessions hard to commit to',
+        ],
+        includes: [
+          '90-minute 1:1 session with Whitney',
+          'Pre-session intake form and health history review',
+          'Personalized action plan sent within 48 hours',
+          'One follow-up email for clarifying questions',
+          'Option to roll into ongoing coaching at any time',
+        ],
+        cta: { text: 'Book a Session', href: '/contact' },
+        image: {
+          src: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&h=600&q=80',
+          alt: 'Woman writing notes during a focused work session',
+          width: 800,
+          height: 600,
+        },
+      },
+    ]}
+  />
+
+  {/* 3. Is this you? — coral section / page's color moment */}
+  <IsThisYou
+    eyebrow="Sound familiar?"
+    heading="You're in the right place."
+    intro="If you've nodded along to any of these, we should talk."
+    items={[
+      "You know what you 'should' be eating — you just can't make it stick",
+      "You feel guilty after eating certain foods, even when you're not sure why",
+      "You've tried every diet and always end up back at square one",
+      'You want to enjoy food again without it feeling complicated',
+      "You're exhausted from thinking about food so much",
+      'You want support that treats you like a whole person, not a number on a scale',
+    ]}
+    cta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    background="accent"
+  />
+
+  {/* 4. Testimonials — 3-across cards */}
+  <Testimonials
+    eyebrow="Client stories"
+    heading="What clients say."
+    background="base"
+    testimonials={[
+      {
+        quote: "I came in thinking I needed another meal plan. What I got instead was an entirely different way of thinking about food. For the first time in years, I'm not obsessing over every bite — and I've never felt healthier.",
+        name: 'Sarah M.',
+        detail: '1:1 Coaching Client',
+      },
+      {
+        quote: "Whitney has a way of cutting through all the noise. She helped me see that my problem wasn't willpower — it was that every approach I'd tried was fighting against how I actually live. We built something that works with my life, not against it.",
+        name: 'Jess T.',
+        detail: 'The Sustainable Table',
+      },
+      {
+        quote: "I was skeptical that one session could do much, but I walked away from my Intensive with more clarity than I'd gotten from months of Googling. Worth every penny.",
+        name: 'Rachel K.',
+        detail: 'Nutrition Intensive',
+      },
+    ]}
+  />
+
+  {/* 5. Process */}
+  <Process
+    eyebrow="How it works"
+    heading="Getting started is simpler than you think."
+    background="base"
+    spacing="tight"
+    steps={[
+      {
+        title: 'Book a free discovery call',
+        description: "A relaxed 20-minute conversation to talk through what's been getting in the way and figure out which path makes the most sense for you. No pressure, no pitch.",
+      },
+      {
+        title: 'We build your plan together',
+        description: "Your first session is a deep dive — your history, your goals, your life. From there, we build something flexible and realistic, not a set of rules to white-knuckle your way through.",
+      },
+      {
+        title: 'You start feeling different',
+        description: "Less stressed around food. More confident in your choices. More energy. The work compounds — small shifts that become your new normal.",
+      },
+    ]}
+    cta={{ text: 'Book Your Call', href: '/booking' }}
+  />
+
+  {/* 6. FAQ */}
+  <FAQ
+    eyebrow="Questions"
+    heading="Frequently asked."
+    background="base"
+    items={[
+      {
+        question: 'Do you accept insurance?',
+        answer: "Currently, I work as an out-of-network provider. Many clients are able to get partial reimbursement through their HSA/FSA accounts or out-of-network benefits. I'm happy to provide a superbill upon request. Reach out if you have questions about your specific coverage.",
+      },
+      {
+        question: "What's the difference between a dietitian and a nutritionist?",
+        answer: "Registered Dietitian Nutritionists (RDNs) have completed accredited undergraduate and graduate coursework, a supervised clinical internship, and passed a national licensing exam. In Texas, 'dietitian' is a licensed title — meaning not just anyone can use it. This matters when you're trusting someone with your health.",
+      },
+      {
+        question: 'Do I have to follow a specific diet or meal plan?',
+        answer: "No — and that's kind of the whole point. My approach is built around flexibility, not rules. We work with your preferences, your schedule, and your goals. You won't leave sessions with a rigid plan you'll abandon in two weeks.",
+      },
+      {
+        question: 'Can I work with you if I live outside of Dallas–Fort Worth?',
+        answer: "Yes. I see clients virtually across Texas and in many other states. The initial discovery call and most follow-up sessions are available via video, so location is rarely a barrier.",
+      },
+      {
+        question: 'How do I know which service is right for me?',
+        answer: "That's exactly what the free discovery call is for. We'll talk through where you are, what you've tried, and what kind of support would actually work for your life. I'll give you an honest recommendation — even if it's not one of my programs.",
+      },
+      {
+        question: "What if I've struggled with disordered eating?",
+        answer: "This is something I take seriously and have experience navigating. I work from a weight-inclusive, non-diet framework and approach disordered eating with both clinical knowledge and personal sensitivity. We'll talk through your history on the discovery call so I can make sure I'm the right fit for your needs.",
+      },
+    ]}
+  />
+
+  {/* 7. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to get started?"
+    heading="Let's figure out your next step together."
+    subheading="Book a free 20-minute discovery call — no commitment, no pressure. Just a conversation about what's been getting in the way."
+    primaryCta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

@@ -1,0 +1,109 @@
+---
+import Button from '~/components/ui/Button.astro';
+
+interface TrustStat {
+  type: 'stat';
+  value: string;
+  label: string;
+}
+
+interface TrustTestimonial {
+  type: 'testimonial';
+  quote: string;
+  author: string;
+}
+
+interface TrustLogos {
+  type: 'logos';
+  label: string;
+  logos: { src: string; alt: string }[];
+}
+
+type Trust = TrustStat | TrustTestimonial | TrustLogos;
+
+export interface Props {
+  tagline?: string;
+  headline: string;
+  subheadline: string;
+  primaryCta: { text: string; href: string };
+  secondaryCta?: { text: string; href: string };
+  image: { src: string; alt: string; width?: number; height?: number };
+  trust?: Trust;
+}
+
+const { tagline, headline, subheadline, primaryCta, secondaryCta, image, trust } = Astro.props;
+---
+
+<section class="bg-bg-base pt-6 pb-12 md:py-24" data-section-bg="base">
+
+
+  <div class="container-page relative">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
+
+      <div class="flex flex-col">
+        {tagline && (
+          <p class="text-xs font-semibold tracking-widest uppercase text-primary-dark mb-3">{tagline}</p>
+        )}
+
+        <h1 class="mb-4">
+          <Fragment set:html={headline} />
+        </h1>
+
+        <div class="text-text-muted leading-relaxed mb-6">
+          <Fragment set:html={subheadline} />
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <Button href={primaryCta.href} variant="primary">{primaryCta.text}</Button>
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="secondary">{secondaryCta.text}</Button>
+          )}
+        </div>
+
+        {trust && (
+          <div class="mt-5">
+            {trust.type === 'stat' && (
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-3xl font-bold text-accent font-heading">{trust.value}</span>
+                <span class="text-lg text-text-muted">{trust.label}</span>
+              </div>
+            )}
+            {trust.type === 'testimonial' && (
+              <blockquote class="pl-3 border-l-2 border-primary">
+                <p class="text-sm text-text-muted italic leading-relaxed">"{trust.quote}"</p>
+                <cite class="text-xs font-semibold text-text-base not-italic mt-1 block">— {trust.author}</cite>
+              </blockquote>
+            )}
+            {trust.type === 'logos' && (
+              <div>
+                <p class="text-xs text-text-muted italic mb-2">{trust.label}</p>
+                <div class="flex flex-wrap items-center gap-5">
+                  {trust.logos.map((logo) => (
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      class="h-7 w-auto grayscale opacity-60 hover:opacity-80 transition-opacity duration-150"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div class="order-first md:order-last self-stretch flex flex-col">
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="flex-1 w-full rounded-2xl object-cover object-top min-h-[280px]"
+          width={image.width}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>

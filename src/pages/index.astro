@@ -1,0 +1,242 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import whitneyAbout from '~/assets/images/Whitney Bateson Feb 2020-75.jpg';
+import leadMagnetMockup from '~/assets/images/Lead Magnet Mockup.png';
+import Hero from '~/components/sections/Hero.astro';
+import Marquee from '~/components/sections/Marquee.astro';
+import Pain from '~/components/sections/Pain.astro';
+import Transformation from '~/components/sections/Transformation.astro';
+import Services from '~/components/sections/Services.astro';
+import About from '~/components/sections/About.astro';
+import Testimonials from '~/components/sections/Testimonials.astro';
+import Process from '~/components/sections/Process.astro';
+import LeadMagnet from '~/components/sections/LeadMagnet.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+import TestimonialsSimpleStacked from '~/components/sections/TestimonialsSimpleStacked.astro';
+
+const metadata = {
+  title: 'Whitney Bateson, RDN — Registered Dietitian Nutritionist in Dallas–Fort Worth',
+  ignoreTitleTemplate: true,
+  description: 'Evidence-based nutrition counseling for women in the Dallas–Fort Worth area and virtually in TX, VA, NY, IL, and GA. Book a free discovery call today.',
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  {/* 1. Hero — light background */}
+  <Hero
+    tagline="Registered Dietitian Nutritionist — Dallas–Fort Worth, TX"
+    headline="Nutrition counseling that <em>actually</em> fits your life."
+    subheadline="If you're tired of one-size-fits-all diets that don't last, you're in the right place. We help you build a sustainable, evidence-based approach to eating — without the overwhelm."
+    primaryCta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    secondaryCta={{ text: 'See Our Services', href: '/services' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=900&q=80',
+      alt: 'Woman relaxing at home, comfortable and at ease',
+      width: 900,
+    }}
+    trust={{ type: 'stat', value: '200+', label: 'clients supported' }}
+  />
+
+  {/* 2. Marquee — primary green strip 
+  <Marquee
+    items={[
+      'Registered Dietitian Nutritionist',
+      'Evidence-Based Nutrition',
+      'Personalized Counseling',
+      'Gut Health',
+      'Intuitive Eating',
+      'Insurance Accepted',
+      'Virtual & In-Person',
+      'Dallas–Fort Worth',
+    ]}
+    background="secondary"
+    speed="xslow"
+  />
+  */}
+
+  {/* 3. Pain — bold primary green, image + text */}
+  <Pain
+    heading="Does any of this sound <em>familiar?</em>"
+    intro="You're not broken. You've just been handed the wrong tools — and maybe too many of them."
+    struggles={[
+      "You've tried every diet, but nothing ever seems to stick",
+      "You're exhausted by conflicting nutrition advice online",
+      "You eat 'healthy' but still don't feel like yourself",
+      "You feel guilty every time you eat something 'off plan'",
+      "You know what you should do, but can't seem to follow through",
+      "Food feels like a source of stress more than nourishment",
+    ]}
+    closing="If you're nodding along, you're in the right place. This is exactly what we help with."
+    cta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=900&h=675&q=80',
+      alt: 'Woman looking thoughtfully at food options in a grocery store',
+      width: 900,
+      height: 675,
+    }}
+    background="base"
+  />
+
+  {/* 4. Transformation — warm peach, simple outcome grid */}
+  <Transformation
+    heading="Here's what changes."
+    intro="When nutrition finally works with your life, not against it."
+    outcomes={[
+      {
+        icon: 'tabler:mood-smile',
+        headline: 'You enjoy eating again',
+        description: 'Food stops being a source of stress. Meals feel nourishing and simple, not something to manage.',
+      },
+      {
+        icon: 'tabler:battery-charging',
+        headline: 'Your energy holds all day',
+        description: 'No more afternoon crashes. You wake up feeling rested and stay that way without relying on caffeine.',
+      },
+      {
+        icon: 'tabler:brain',
+        headline: 'The mental noise quiets',
+        description: 'You stop tracking every bite and second-guessing every choice. A flexible framework takes over.',
+      },
+      {
+        icon: 'tabler:heart-handshake',
+        headline: 'You have real support',
+        description: 'Not another app. A partner who knows your story and builds a plan around your actual life.',
+      },
+    ]}
+    closingLine="This isn't about perfection. It's about building something that holds."
+    background="accent-light"
+  />
+
+  {/* 5. Services */}
+  <Services
+    heading="How we can work together."
+    intro="Every path is different. These are the ways we support clients — from one-on-one counseling to focused intensives."
+    services={[
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=500&q=80',
+          alt: 'Dietitian meeting with a client one-on-one',
+          width: 800,
+          height: 500,
+        },
+        label: '1:1 Coaching',
+        name: 'Personalized Nutrition Counseling',
+        description: "This is where we do the deep work — your habits, your history, your actual life. One-on-one sessions held virtually or in-person in the DFW area, built around what's really getting in your way.",
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#one-on-one',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&h=500&q=80',
+          alt: 'Women in a supportive group program session',
+          width: 800,
+          height: 500,
+        },
+        label: 'Group Program',
+        name: 'The Sustainable Table',
+        description: "A 10-week live group program for women ready to stop starting over. The same evidence-based framework as 1:1 coaching, plus the energy and accountability of doing it with others who get it.",
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#group',
+      },
+      {
+        image: {
+          src: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&h=500&q=80',
+          alt: 'Woman writing notes during a focused work session',
+          width: 800,
+          height: 500,
+        },
+        label: 'Single Session',
+        name: 'Nutrition Intensive',
+        description: "Not ready for ongoing coaching? One focused 90-minute session to get clear on your questions, cut through the confusion, and leave with concrete next steps — no commitment required.",
+        ctaLabel: 'Learn more',
+        ctaHref: '/services#intensive',
+      },
+    ]}
+    background="base"
+  />
+
+  {/* Testimonials — stacked, centered */}
+  <TestimonialsSimpleStacked
+    heading="What clients are saying"
+    testimonials={[
+      {
+        quote: "I was skeptical that I'd ever stop thinking about food all day. But after a few months, the mental noise just... quieted. I eat well, I don't obsess, and I actually enjoy meals again.",
+        name: 'Jordan M.',
+        detail: 'Intuitive eating program',
+      },
+      {
+        quote: "Whitney doesn't lecture you. She listens first, then builds a plan around your actual life — not some ideal version of it. That made all the difference for me.",
+        name: 'Priya K.',
+        detail: '1:1 counseling client',
+      },
+    ]}
+    seeMoreLabel="See more client love"
+    seeMoreHref="/testimonials"
+    background="base"
+  />
+
+  {/* 6. About Intro */}
+  <About
+    eyebrow="Meet your dietitian"
+    heading="Hi, I'm Whitney — and I've been where you are."
+    body={[
+      "I spent years chasing the \"right\" way to eat — tracking, restricting, starting over. It wasn't until I stopped following someone else's rules that things actually changed.",
+      "Today I work with women ready for a different approach. I bring the clinical knowledge and the lived experience, with zero judgment.",
+    ]}
+    image={{
+      src: whitneyAbout.src,
+      alt: 'Whitney Bateson, smiling warmly',
+      width: whitneyAbout.width,
+      height: whitneyAbout.height,
+    }}
+    cta={{ text: 'Meet me', href: '/about' }}
+    panelBackground="accent2-light"
+  />
+
+
+  {/* 8. Process */}
+  <Process
+    eyebrow="How it works"
+    heading="Getting started is simpler than you think."
+    intro="Three steps from where you are now to feeling like yourself around food again."
+    steps={[
+      {
+        title: 'Book a free discovery call.',
+        description: "We spend 20 minutes getting to know each other. You share what's been going on, I answer your questions, and we figure out together whether working together makes sense. No pressure, no obligation.",
+      },
+      {
+        title: 'We build your plan together.',
+        description: 'Your first full session is where we go deep — your history, your goals, your actual life. I build a personalized plan from there, not from a template.',
+      },
+      {
+        title: 'You start seeing it work.',
+        description: 'We meet regularly, adjust as needed, and you build real confidence over time. Most clients notice meaningful shifts within the first few weeks — not months.',
+      },
+    ]}
+    cta={{ text: 'Book your free call', href: '/booking' }}
+    background="base"
+    spacing="loose"
+  />
+
+  {/* 9. Lead Magnet */}
+  <LeadMagnet
+    eyebrow="Want a Quick Win? Get My Free Guide!"
+    heading="5 Nutrition Myths That Are Keeping You Stuck"
+    description="Confused by conflicting nutrition advice? This free guide breaks down the five most common myths dietitians hear — and what to do instead."
+    image={{ src: leadMagnetMockup.src, alt: 'Free nutrition guide mockup', width: leadMagnetMockup.width, height: leadMagnetMockup.height }}
+    emailPlaceholder="Your email address"
+    ctaLabel="Send it to me"
+    background="accent"
+  />
+
+  {/* 10. Final CTA */}
+  <CtaFinal
+    eyebrow="Ready to get started?"
+    heading="You don't have to figure this out alone."
+    subheading="Book a free 20-minute discovery call and let's talk about what's been getting in the way."
+    primaryCta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

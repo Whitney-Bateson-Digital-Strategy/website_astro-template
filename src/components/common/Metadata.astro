@@ -1,0 +1,61 @@
+---
+import { SEO } from 'astro-seo';
+
+import { SITE, METADATA, I18N } from 'astrowind:config';
+import type { MetaData } from '~/types';
+import { getCanonical } from '~/utils/permalinks';
+
+export interface Props extends MetaData {
+  dontUseTitleTemplate?: boolean;
+}
+
+const {
+  title,
+  ignoreTitleTemplate = false,
+  canonical = String(getCanonical(String(Astro.url.pathname))),
+  robots = {},
+  description,
+  openGraph = {},
+} = Astro.props;
+
+const resolvedTitle = title || METADATA?.title?.default || SITE?.name || '';
+const titleTemplate = METADATA?.title?.template ?? '%s';
+const finalTitle = ignoreTitleTemplate ? resolvedTitle : titleTemplate.replace('%s', resolvedTitle);
+const finalDescription = description || METADATA?.description || '';
+
+const noindex = typeof robots?.index !== 'undefined' ? !robots.index : !(METADATA?.robots?.index ?? false);
+const nofollow = typeof robots?.follow !== 'undefined' ? !robots.follow : !(METADATA?.robots?.follow ?? false);
+
+const ogImageUrl = openGraph?.images?.[0]?.url ?? METADATA?.openGraph?.images?.[0]?.url ?? '';
+const ogType = (openGraph?.type || METADATA?.openGraph?.type || 'website') as string;
+---
+
+<SEO
+  title={finalTitle}
+  description={finalDescription}
+  canonical={canonical}
+  noindex={noindex}
+  nofollow={nofollow}
+  openGraph={{
+    basic: {
+      title: finalTitle,
+      type: ogType,
+      image: ogImageUrl,
+      url: canonical,
+    },
+    optional: {
+      siteName: SITE?.name,
+      locale: I18N?.language || 'en',
+      description: finalDescription,
+    },
+  }}
+  twitter={{
+    card: (METADATA?.twitter?.cardType as 'summary_large_image' | 'summary' | 'app' | 'player') ?? 'summary_large_image',
+    site: METADATA?.twitter?.site,
+    creator: METADATA?.twitter?.handle,
+    title: finalTitle,
+    description: finalDescription,
+    image: ogImageUrl,
+    imageAlt: finalTitle,
+  }}
+/>

@@ -1,0 +1,22 @@
+---
+export interface Props {
+  class?: string;
+  bg?: string;
+  spacing?: 'default' | 'tight' | 'loose';
+  [key: string]: unknown;
+}
+
+const { class: className = '', bg, spacing = 'default', ...rest } = Astro.props;
+
+const spacingClass = spacing === 'tight' ? 'section-py-tight' : spacing === 'loose' ? 'section-py-loose' : 'section-py';
+---
+
+<section
+  class={`${spacingClass} ${className}`}
+  data-section-bg={bg}
+  {...rest}
+>
+  <div class="container-page">
+    <slot />
+  </div>
+</section>

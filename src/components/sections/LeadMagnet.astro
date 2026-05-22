@@ -1,0 +1,124 @@
+---
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  description: string;
+  image: { src: string; alt: string; width?: number; height?: number };
+  firstNamePlaceholder?: string;
+  emailPlaceholder?: string;
+  ctaLabel?: string;
+  formAction?: string;
+  background?: 'accent' | 'accent-light' | 'primary' | 'accent2' | 'accent2-light';
+}
+
+const {
+  eyebrow = 'Free download',
+  heading,
+  description,
+  image,
+  firstNamePlaceholder = 'First name',
+  emailPlaceholder = 'Your email address',
+  ctaLabel = 'Send it to me',
+  formAction = '#',
+  background = 'accent',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  accent:          'bg-accent',
+  'accent-light':  'bg-accent-light',
+  primary:         'bg-primary',
+  accent2:         'bg-accent2',
+  'accent2-light': 'bg-accent2-light',
+};
+
+const isDark = background === 'accent' || background === 'primary' || background === 'accent2';
+---
+
+<section class={`overflow-visible relative ${bgMap[background]}`} data-section-bg={background}>
+  <div class="container-page">
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-4 md:gap-12 items-stretch">
+
+      <!-- Image column -->
+      <div class="relative flex items-center justify-center pt-10 md:pt-0">
+        <!-- Mobile: sits naturally inside section, no margin tricks -->
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="block md:hidden w-72 max-w-full drop-shadow-2xl -rotate-2"
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
+        />
+        <!-- Desktop: absolutely positioned, bleeds above and below section -->
+        <img
+          src={image.src}
+          alt={image.alt}
+          class="hidden md:block absolute -rotate-3 drop-shadow-2xl object-contain"
+          width={image.width}
+          height={image.height}
+          style="top: -3rem; bottom: -3rem; left: 0; right: 1rem; width: calc(100% - 1rem); height: calc(100% + 6rem);"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Text column is the only thing driving section height -->
+      <div class="flex flex-col justify-center pb-10 pt-4 md:py-14">
+        {eyebrow && (
+          <p class={`text-sm font-semibold uppercase tracking-widest mb-3 ${isDark ? 'text-white/80' : 'text-primary-dark'}`}>
+            {eyebrow}
+          </p>
+        )}
+
+        <h2 class={`mb-4 ${isDark ? 'text-white' : ''}`}>{heading}</h2>
+
+        <p class={`leading-relaxed mb-8 ${isDark ? 'text-white/90' : 'text-text-muted'}`}>
+          {description}
+        </p>
+
+        <form action={formAction} method="POST" class="flex flex-col sm:flex-row gap-3">
+          <label for="lm-first-name" class="sr-only">First name</label>
+          <input
+            type="text"
+            id="lm-first-name"
+            name="first-name"
+            required
+            placeholder={firstNamePlaceholder}
+            autocomplete="given-name"
+            class={`flex-1 min-w-0 px-4 py-3 rounded-md text-base focus:outline-none focus:ring-2 ${
+              isDark
+                ? 'bg-white/20 text-white placeholder:text-white/60 focus:ring-white/40'
+                : 'bg-white border border-border text-text-base placeholder:text-text-muted focus:ring-primary'
+            }`}
+          />
+          <label for="lm-email" class="sr-only">Email address</label>
+          <input
+            type="email"
+            id="lm-email"
+            name="email"
+            required
+            placeholder={emailPlaceholder}
+            autocomplete="email"
+            class={`flex-1 min-w-0 px-4 py-3 rounded-md text-base focus:outline-none focus:ring-2 ${
+              isDark
+                ? 'bg-white/20 text-white placeholder:text-white/60 focus:ring-white/40'
+                : 'bg-white border border-border text-text-base placeholder:text-text-muted focus:ring-primary'
+            }`}
+          />
+          <button
+            type="submit"
+            class={`px-6 py-3 rounded-md font-medium transition-colors duration-200 whitespace-nowrap ${
+              isDark
+                ? 'bg-white text-accent hover:bg-white/90'
+                : 'bg-primary text-white hover:bg-primary-dark'
+            }`}
+          >
+            {ctaLabel}
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

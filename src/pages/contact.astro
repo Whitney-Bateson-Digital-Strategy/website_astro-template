@@ -1,0 +1,38 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import ContactForm from '~/components/sections/ContactForm.astro';
+import CtaFinal from '~/components/sections/CtaFinal.astro';
+
+const metadata = {
+  title: 'Contact',
+  description: 'Get in touch with Whitney Bateson, RDN. Send a message, ask a question, or learn more about nutrition counseling in Dallas–Fort Worth and virtually.',
+};
+---
+
+<Layout metadata={metadata}>
+
+  {/* 1. Hero */}
+  <PageHero
+    variant="centered"
+    background="accent2-light"
+    eyebrow="Say hello"
+    heading="Let's talk."
+    body={[
+      "Whether you have a question, want to learn more about a service, or just aren't sure where to start — I'd love to hear from you.",
+    ]}
+  />
+
+  {/* 2. Contact info + form */}
+  <ContactForm background="base" />
+
+  {/* 3. Final CTA */}
+  <CtaFinal
+    eyebrow="Prefer to talk first?"
+    heading="Book a free discovery call."
+    subheading="A 20-minute conversation is the easiest way to figure out if we're a good fit — no prep required."
+    primaryCta={{ text: 'Book a Free Discovery Call', href: '/booking' }}
+    background="primary"
+  />
+
+</Layout>

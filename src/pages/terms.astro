@@ -1,0 +1,48 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import PageHero from '~/components/sections/PageHero.astro';
+import LegalContent from '~/components/sections/LegalContent.astro';
+
+const metadata = {
+  title: 'Terms of Service — Whitney Bateson, RDN',
+  description: 'Terms of Service for whitneybateson.com',
+  noindex: true,
+};
+---
+
+<Layout metadata={metadata} showLeadMagnet={false}>
+
+  <PageHero
+    variant="centered"
+    background="subtle"
+    heading="Terms of Service"
+  />
+
+  <LegalContent lastUpdated="[Month Year]">
+
+    <p><strong>PLACEHOLDER — Replace this entire section with your actual Terms of Service before going live.</strong> An attorney or terms generator can produce terms appropriate for your practice type and state.</p>
+
+    <h2>Acceptance of Terms</h2>
+    <p>By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use this website.</p>
+
+    <h2>Not Medical Advice</h2>
+    <p>The content on this website is provided for informational and educational purposes only. It is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.</p>
+
+    <h2>Professional Services</h2>
+    <p>Nutrition counseling services are provided pursuant to a formal client agreement. Nothing on this website constitutes the establishment of a dietitian-client relationship. A formal intake process is required before any professional services begin.</p>
+
+    <h2>Intellectual Property</h2>
+    <p>All content on this website, including text, graphics, logos, and images, is the property of Whitney Bateson, RDN, and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works without written permission.</p>
+
+    <h2>Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Whitney Bateson, RDN, shall not be liable for any indirect, incidental, special, or consequential damages arising out of your use of this website or its content.</p>
+
+    <h2>Changes to Terms</h2>
+    <p>We reserve the right to update these terms at any time. Changes will be posted on this page with an updated date. Your continued use of the website after changes constitutes acceptance of the revised terms.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have questions about these Terms of Service, please contact us at <a href="mailto:hello@whitneybateson.com">hello@whitneybateson.com</a>.</p>
+
+  </LegalContent>
+
+</Layout>

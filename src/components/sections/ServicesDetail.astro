@@ -1,0 +1,172 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '~/components/ui/Button.astro';
+import SectionWrapper from '~/components/common/SectionWrapper.astro';
+
+export interface ServiceItem {
+  id?: string;
+  label: string;
+  name: string;
+  tagline?: string;
+  description: string;
+  isForYou: string[];
+  includes: string[];
+  cta: { text: string; href: string };
+  image: { src: string; alt: string; width?: number; height?: number };
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  intro?: string;
+  services: ServiceItem[];
+  background?: 'base' | 'subtle';
+}
+
+const {
+  eyebrow,
+  heading,
+  intro,
+  services,
+  background = 'base',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:   'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+};
+---
+
+<SectionWrapper class={bgMap[background]} bg={background}>
+
+  <!-- Section header -->
+  {(eyebrow || heading || intro) && (
+    <div class="text-center mb-12 md:mb-16">
+      {eyebrow && (
+        <p class="text-sm font-semibold uppercase tracking-widest text-primary-dark mb-3">{eyebrow}</p>
+      )}
+      {heading && <h2>{heading}</h2>}
+      {intro && <p class="mt-4 text-text-muted max-w-2xl mx-auto">{intro}</p>}
+    </div>
+  )}
+
+  <!-- Service rows -->
+  <div class="flex flex-col divide-y divide-border">
+    {services.map((service, i) => {
+      const imageLeft = i % 2 === 0;
+      return (
+        <div
+          id={service.id}
+          class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start py-16 md:py-20 first:pt-0 last:pb-0"
+          data-service-row
+          data-dir={imageLeft ? 'left' : 'right'}
+        >
+
+          <!-- Image -->
+          <div class={`relative overflow-hidden ${!imageLeft ? 'md:order-last' : ''}`}>
+            <div class={`absolute -z-10 w-2/3 h-2/3 rounded-2xl ${imageLeft ? '-bottom-4 -left-4 bg-accent2-light' : '-bottom-4 -right-4 bg-accent-light'}`} />
+            <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-md">
+              <img
+                src={service.image.src}
+                alt={service.image.alt}
+                class="w-full h-full object-cover"
+                width={service.image.width}
+                height={service.image.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div class="flex flex-col gap-6">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-widest text-primary-dark mb-2">{service.label}</p>
+              <h2 class="text-[1.75rem] md:text-[2rem] leading-tight">{service.name}</h2>
+              {service.tagline && (
+                <p class="mt-3 text-[1.1rem] font-medium italic text-text-muted leading-relaxed border-l-4 border-accent pl-4">
+                  {service.tagline}
+                </p>
+              )}
+            </div>
+
+            <p class="text-text-muted leading-relaxed">{service.description}</p>
+
+            <!-- Two bullet lists -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-text-heading mb-3">This is for you if…</p>
+                <ul class="flex flex-col gap-2">
+                  {service.isForYou.map((item) => (
+                    <li class="flex gap-2.5 items-start text-text-muted">
+                      <span class="mt-[0.3rem] flex-shrink-0 w-4 h-4 rounded-full bg-accent/15 flex items-center justify-center">
+                        <Icon name="tabler:check" class="w-2.5 h-2.5 text-accent" aria-hidden="true" />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-text-heading mb-3">What's included</p>
+                <ul class="flex flex-col gap-2">
+                  {service.includes.map((item) => (
+                    <li class="flex gap-2.5 items-start text-text-muted">
+                      <span class="mt-[0.3rem] flex-shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
+                        <Icon name="tabler:sparkles" class="w-2.5 h-2.5 text-primary-dark" aria-hidden="true" />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+            </div>
+
+            <div class="pt-2">
+              <Button href={service.cta.href} variant="primary">{service.cta.text}</Button>
+            </div>
+          </div>
+
+        </div>
+      );
+    })}
+  </div>
+
+</SectionWrapper>
+
+<style>
+  [data-service-row] {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  [data-service-row][data-dir="left"]  { transform: translateX(-1.5rem); }
+  [data-service-row][data-dir="right"] { transform: translateX(1.5rem); }
+
+  [data-service-row].is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  function initServiceAnimations() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('[data-service-row]').forEach((el) => observer.observe(el));
+  }
+
+  document.addEventListener('astro:page-load', initServiceAnimations);
+</script>

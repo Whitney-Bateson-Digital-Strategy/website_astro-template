@@ -1,0 +1,136 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Fact {
+  icon: string;
+  label: string;
+  fact: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading?: string;
+  facts: Fact[];
+  background?: 'base' | 'subtle' | 'accent-light' | 'accent2-light' | 'accent' | 'primary';
+}
+
+const {
+  eyebrow = 'Get to know me',
+  heading = 'A few things about me.',
+  facts,
+  background = 'accent',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:            'bg-bg-base',
+  subtle:          'bg-bg-subtle',
+  'accent-light':  'bg-accent-light',
+  'accent2-light': 'bg-accent2-light',
+  accent:          'bg-accent',
+  primary:         'bg-primary',
+};
+
+const isDark = background === 'accent' || background === 'primary';
+---
+
+<section class={`section-py ${bgMap[background]}`} data-section-bg={background}>
+  <div class="container-page">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      {eyebrow && (
+        <p class={`text-sm font-semibold uppercase tracking-widest mb-3 ${isDark ? 'text-white/70' : 'text-primary-dark'}`}>{eyebrow}</p>
+      )}
+      {heading && <h2 class={isDark ? 'text-white' : ''}>{heading}</h2>}
+      <p class={`mt-3 text-sm ${isDark ? 'text-white/60' : 'text-text-muted'}`}>Hover (or tap) to flip.</p>
+    </div>
+
+    <!-- Flip card grid — 3 cols max, narrower container -->
+    <div class="max-w-xs mx-auto sm:max-w-3xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+      {facts.map((fact) => (
+        <div class="fun-fact-card" role="button" tabindex="0" aria-label={`${fact.label}: ${fact.fact}`}>
+          <div class="fun-fact-inner">
+
+            <!-- Front — always white so it pops off the saturated background -->
+            <div class="fun-fact-face fun-fact-front bg-white rounded-2xl shadow-sm">
+              <Icon name={fact.icon} class="w-9 h-9 text-accent mb-3" aria-hidden="true" />
+              <p class="text-base font-semibold text-text-base text-center leading-snug">{fact.label}</p>
+            </div>
+
+            <!-- Back — muted coral (accent-light), avoids two saturated colors together -->
+            <div class="fun-fact-face fun-fact-back bg-accent-light rounded-2xl">
+              <p class="text-[0.95rem] text-text-heading text-center leading-relaxed font-semibold">{fact.fact}</p>
+            </div>
+
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .fun-fact-card {
+    perspective: 900px;
+    cursor: pointer;
+    min-height: 140px;
+  }
+
+  .fun-fact-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 140px;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover flips on desktop */
+  @media (hover: hover) {
+    .fun-fact-card:hover .fun-fact-inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  /* Click/tap toggles on touch devices */
+  .fun-fact-card.is-flipped .fun-fact-inner {
+    transform: rotateY(180deg);
+  }
+
+  .fun-fact-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .fun-fact-back {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  function initFunFactCards() {
+    // Tap-to-flip for touch/mobile devices
+    document.querySelectorAll('.fun-fact-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('is-flipped');
+      });
+      card.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+          e.preventDefault();
+          card.classList.toggle('is-flipped');
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initFunFactCards);
+</script>
