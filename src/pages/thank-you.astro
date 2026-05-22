@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Button from '~/components/ui/Button.astro';
+
+const title = 'Message received!';
+---
+
+<Layout metadata={{ title }}>
+  <section class="flex items-center min-h-[70vh] p-16">
+    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+      <div class="max-w-md text-center">
+        <div class="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+        </div>
+        <h1 class="mb-4">Thank you!</h1>
+        <p class="text-text-muted text-lg mb-8">
+          Your message has been received. I'll get back to you within 1–2 business days.
+        </p>
+        <Button href="/" variant="primary">Back to home</Button>
+      </div>
+    </div>
+  </section>
+</Layout>
