@@ -47,6 +47,9 @@ if (
   isUnpicCompatible(_image)
 ) {
   image = await getImagesOptimized(_image, props, unpicOptimizer);
+} else if (typeof _image === 'string' && (_image.startsWith('http://') || _image.startsWith('https://'))) {
+  // External URL not handled by Unpic — use as-is, no optimization
+  image = { src: _image, attributes: { alt: props.alt, width: props.width, height: props.height, loading: props.loading, decoding: props.decoding } };
 } else if (_image) {
   image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
 }
