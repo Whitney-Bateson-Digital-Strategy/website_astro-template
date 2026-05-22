@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/cormorant";
 @plugin "@tailwindcss/typography";
 
 @theme {
