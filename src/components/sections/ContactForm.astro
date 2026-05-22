@@ -111,7 +111,7 @@ const bgMap: Record<string, string> = {
         method="POST"
         action="/thank-you"
         data-netlify="true"
-        netlify
+        {...{ netlify: true }}
         netlify-honeypot="bot-field"
         class="flex flex-col gap-5"
       >

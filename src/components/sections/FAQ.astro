@@ -45,7 +45,7 @@ const faqSchema = {
 
 <SectionWrapper class={bgMap[background]} bg={background}>
 
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <!-- Header -->
   <div class="max-w-2xl mx-auto text-center mb-12">
@@ -58,7 +58,7 @@ const faqSchema = {
 
   <!-- Accordion -->
   <div class="max-w-2xl mx-auto flex flex-col divide-y divide-border">
-    {items.map((item, i) => (
+    {items.map((item) => (
       <details class="faq-item group py-5 first:pt-0 last:pb-0" name="faq">
         <summary class="flex items-center justify-between gap-4 cursor-pointer list-none select-none">
           <span class="font-semibold text-text-heading leading-snug pr-2">{item.question}</span>
