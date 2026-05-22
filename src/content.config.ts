@@ -79,7 +79,7 @@ const blogCollection = defineCollection({
     image: z.object({
       src: z.string(),
       alt: z.string(),
-    }),
+    }).optional(),
     draft: z.boolean().optional().default(false),
   }),
 });
