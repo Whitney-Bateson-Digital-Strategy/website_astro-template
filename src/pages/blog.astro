@@ -1,0 +1,65 @@
+---
+export const prerender = true;
+import Layout from '~/layouts/PageLayout.astro';
+import { getAllPosts, formatDate } from '~/utils/blog';
+
+const posts = await getAllPosts();
+
+const metadata = {
+  title: 'Blog — Nutrition Insights & Practical Guidance',
+  description: 'Evidence-based nutrition articles from a registered dietitian — real advice for real life.',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="py-16 md:py-24">
+    <div class="container-page">
+
+      <div class="max-w-2xl mb-12">
+        <p class="text-sm font-bold uppercase tracking-widest text-primary mb-3">From the Blog</p>
+        <h1 class="mb-4">Nutrition insights for real life.</h1>
+        <p class="text-text-muted text-lg leading-relaxed">
+          Evidence-based articles on eating well, building sustainable habits, and cutting through the noise.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <article class="flex flex-col">
+            <div class="flex-1">
+              {post.data.tags && post.data.tags.length > 0 && (
+                <p class="text-xs font-semibold uppercase tracking-widest text-primary mb-2">
+                  {post.data.tags[0]}
+                </p>
+              )}
+              <h2 class="text-xl font-bold leading-snug mb-3">
+                <a href={`/${post.id}`} class="hover:text-primary transition-colors duration-150">
+                  {post.data.title}
+                </a>
+              </h2>
+              {post.data.excerpt && (
+                <p class="text-text-muted leading-relaxed mb-4">{post.data.excerpt}</p>
+              )}
+            </div>
+            <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+              <time class="text-sm text-text-muted" datetime={post.data.publishDate.toISOString()}>
+                {formatDate(post.data.publishDate)}
+              </time>
+              <a
+                href={`/${post.id}`}
+                class="text-sm font-medium text-primary hover:text-primary-dark transition-colors duration-150"
+              >
+                Read →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <p class="text-text-muted">No posts yet — check back soon.</p>
+      )}
+
+    </div>
+  </section>
+</Layout>
