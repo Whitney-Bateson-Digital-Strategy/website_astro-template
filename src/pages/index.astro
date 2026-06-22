@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import whitneyAbout from '~/assets/images/Whitney Bateson Feb 2020-75.jpg';
 import leadMagnetMockup from '~/assets/images/Lead Magnet Mockup.png';
 import Hero from '~/components/sections/Hero.astro';
+import InsuranceBanner from '~/components/sections/InsuranceBanner.astro';
 import Pain from '~/components/sections/Pain.astro';
 import Transformation from '~/components/sections/Transformation.astro';
 import Services from '~/components/sections/Services.astro';
@@ -19,7 +20,15 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata} showLeadMagnet={false}>
+<Layout
+  metadata={metadata}
+  showLeadMagnet={false}
+  announcement={{
+    text: 'Now accepting new clients for Summer 2025 —',
+    ctaText: 'Book a free discovery call →',
+    href: '/booking',
+  }}
+>
 
   {/* 1. Hero — light background */}
   <Hero
@@ -33,10 +42,26 @@ const metadata = {
       alt: 'Woman relaxing at home, comfortable and at ease',
       width: 900,
     }}
-    trust={{ type: 'stat', value: '200+', label: 'clients supported' }}
+    trust={{
+      type: 'testimonial',
+      quote: "Whitney doesn't lecture you. She listens first, then builds a plan around your actual life — not some ideal version of it. That made all the difference for me.",
+      author: 'Priya K., 1:1 counseling client',
+    }}
   />
 
-  {/* 2. Marquee — primary green strip 
+  {/* 2. Insurance banner */}
+  <InsuranceBanner
+    logos={[
+      { name: 'Blue Cross Blue Shield' },
+      { name: 'Aetna' },
+      { name: 'United Healthcare' },
+      { name: 'Cigna' },
+      { name: 'Medicare' },
+      { name: 'Medicaid' },
+    ]}
+  />
+
+  {/* 3. Marquee — primary green strip 
   <Marquee
     items={[
       'Registered Dietitian Nutritionist',
@@ -223,8 +248,8 @@ const metadata = {
     heading="5 Nutrition Myths That Are Keeping You Stuck"
     description="Confused by conflicting nutrition advice? This free guide breaks down the five most common myths dietitians hear — and what to do instead."
     image={{ src: leadMagnetMockup.src, alt: 'Free nutrition guide mockup', width: leadMagnetMockup.width, height: leadMagnetMockup.height }}
-    emailPlaceholder="Your email address"
-    ctaLabel="Send it to me"
+    ctaLabel="Get the free guide"
+    ctaHref="#"
     background="accent"
   />
 

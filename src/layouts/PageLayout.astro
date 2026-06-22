@@ -3,6 +3,7 @@ import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/common/Header.astro';
 import Footer from '~/components/common/Footer.astro';
 import LeadMagnetMini from '~/components/sections/LeadMagnetMini.astro';
+import AnnouncementBanner from '~/components/common/AnnouncementBanner.astro';
 import { SkipLink } from 'accessible-astro-components';
 
 import { headerData, footerData } from '~/navigation';
@@ -13,13 +14,16 @@ export interface Props {
   metadata?: MetaData;
   /** Set to false on pages where the lead magnet strip shouldn't appear (legal pages, booking page, etc.) */
   showLeadMagnet?: boolean;
+  /** Optional announcement banner shown above the nav */
+  announcement?: { text: string; ctaText?: string; href?: string };
 }
 
-const { metadata, showLeadMagnet = true } = Astro.props;
+const { metadata, showLeadMagnet = true, announcement } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
   <SkipLink />
+  {announcement && <AnnouncementBanner {...announcement} />}
   <slot name="header">
     <Header links={headerData.links} actions={headerData.actions} />
   </slot>

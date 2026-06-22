@@ -1,0 +1,56 @@
+---
+export interface InsuranceLogo {
+  src?: string;
+  name: string;
+  alt?: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  logos: InsuranceLogo[];
+  background?: 'base' | 'subtle';
+}
+
+const {
+  eyebrow = 'Insurance We Accept',
+  logos,
+  background = 'base',
+} = Astro.props;
+
+const bgMap: Record<string, string> = {
+  base:   'bg-bg-base',
+  subtle: 'bg-bg-subtle',
+};
+---
+
+<div class={`${bgMap[background]} border-y border-border py-5`}>
+  <div class="container-page">
+    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+
+      <p class="text-sm font-bold uppercase tracking-widest text-text-heading whitespace-nowrap flex-shrink-0">
+        {eyebrow}
+      </p>
+
+      <div class="w-px h-5 bg-border-strong hidden sm:block flex-shrink-0"></div>
+
+      <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        {logos.map((logo) =>
+          logo.src ? (
+            <img
+              src={logo.src}
+              alt={logo.alt ?? logo.name}
+              class="h-7 w-auto object-contain grayscale opacity-60 hover:opacity-80 transition-opacity duration-150"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span class="inline-flex items-center px-3.5 py-1.5 rounded-md border border-border bg-bg-card text-sm font-semibold text-text-base shadow-sm">
+              {logo.name}
+            </span>
+          )
+        )}
+      </div>
+
+    </div>
+  </div>
+</div>
