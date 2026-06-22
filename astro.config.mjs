@@ -7,12 +7,15 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import icon from 'astro-icon';
+import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
 
 import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const isDev = process.env.NODE_ENV === 'development';
 
 export default defineConfig({
   output: 'static',
@@ -40,6 +43,7 @@ export default defineConfig({
     astrowind({
       config: './src/config.yaml',
     }),
+    ...(isDev ? [react(), keystatic()] : []),
   ],
 
   image: {
