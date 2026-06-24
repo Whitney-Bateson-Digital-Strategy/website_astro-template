@@ -3,7 +3,8 @@ import { block } from '@keystatic/core/content-components';
 
 export default config({
   storage: {
-    kind: 'local',
+    kind: 'github',
+    repo: 'Whitney-Bateson-Digital-Strategy/website_astro-template',
   },
   ui: {
     brand: { name: 'WBDS Blog' },
