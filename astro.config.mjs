@@ -7,9 +7,6 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import icon from 'astro-icon';
-import react from '@astrojs/react';
-import keystatic from '@keystatic/astro';
-import netlify from '@astrojs/netlify';
 
 import astrowind from './vendor/integration';
 
@@ -18,12 +15,10 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   output: 'static',
-  adapter: netlify({ imageCDN: false }),
 
   integrations: [
     sitemap(),
     mdx(),
-    react(),
     icon({
       include: {
         tabler: ['*'],
@@ -44,7 +39,6 @@ export default defineConfig({
     astrowind({
       config: './src/config.yaml',
     }),
-    keystatic(),
   ],
 
   image: {
@@ -58,7 +52,6 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    envPrefix: ['PUBLIC_', 'KEYSTATIC_'],
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),
