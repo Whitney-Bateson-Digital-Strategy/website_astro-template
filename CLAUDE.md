@@ -37,7 +37,11 @@ intentional — it makes Claude Code edits predictable and consistent.
 | astro-seo | latest (pin exact) | SEO meta tags, OG, Twitter cards — configured in Layout.astro |
 | accessible-astro-components | latest (pin exact) | Skip links, keyboard nav, ARIA patterns (WCAG 2.2 AA) |
 | Netlify | — | Hosting, forms, serverless functions, deploy previews |
-| Keystatic | latest (pin exact) | Blog/podcast editing only — clients self-serve blog posts via clean admin UI at /keystatic |
+
+**No CMS.** As of July 2026 the template ships with **no CMS of any kind** —
+it is a plain static Astro site. Blog posts are authored as Markdown/MDX files
+committed directly to the GitHub repo. Keystatic was trialled and removed (see
+"CMS Model" below). Do not reintroduce a CMS without an explicit decision.
 
 **Never use `^` in package.json versions.** Always pin exact versions.
 Wrong: `"astro": "^6.0.0"` → Right: `"astro": "6.1.2"`
@@ -570,25 +574,27 @@ so the menu doesn't close as the mouse moves down to it.
 
 ## CMS Model
 
+**Current decision (July 2026): no CMS.** The template is a plain static Astro
+site with no admin UI and no client login. All content — page-level and blog —
+is managed by the team via code + deploy.
+
 **Page-level content (hero copy, pricing, bios, services) — managed service.**
 Clients submit an edit request. Claude Code makes the edit. Deploy preview
 generated. Client approves. Live within 24 hours. No CMS, no login, no risk
 of clients breaking their layout.
 
-**Blog posts and podcast episodes — Keystatic.**
-Keystatic provides a clean form-based admin UI at `/keystatic` on the deployed
-site. Clients write and publish posts without touching code. This is the one
-case where client self-service genuinely makes sense — frequent, low-risk,
-well-suited to a form editor.
+**Blog posts — Markdown committed to GitHub.**
+Posts are `.mdx` files in `src/content/blog/`, written and committed directly
+to the repo (by the team, via Claude Code or an editor). They render through
+`src/pages/[slug].astro`. No editing UI — adding a post = adding a file.
 
-**What Keystatic does NOT handle:**
-- Page-level structural content (widget props in .astro files)
-- Navigation links (edit `navigation.ts` directly)
-- Design tokens / branding (edit `global.css` directly)
-
-**Per-client setup:** Each client site gets its own Keystatic Cloud project
-(free tier, up to 3 users). Connect to the client's GitHub repo. No per-month
-cost per client.
+**Keystatic was trialled and removed (2026-07-01).** Self-serve editing via
+Keystatic's GitHub storage required each client to have a GitHub account + a
+manually-created GitHub App, which is poor UX for non-technical wellness
+clients. **Keystatic Cloud** (email logins, no GitHub account, free up to 3
+users/team) is the path to revisit *if and when* client self-service becomes a
+priority — but it is deliberately not in the template today. Do not reintroduce
+any CMS without an explicit decision.
 
 ---
 
@@ -699,8 +705,13 @@ Non-obvious facts about the build setup that a fresh session needs to know to av
 **Vite version override (required)**
 `package.json` has `"overrides": { "vite": "7.3.2" }`. Astro 6 requires Vite 7 but npm resolves Vite 8 by default. Do not remove this override — the build will warn and may break without it.
 
-**Keystatic: core only, no Astro integration**
-Only `@keystatic/core` is installed. `@keystatic/astro` was intentionally excluded — it declares a peer dependency on `astro@"2 || 3 || 4 || 5"` and does not support Astro 6. It also requires React, which this template does not use. When building the blog/CMS session, check whether Keystatic has released Astro 6 support before installing `@keystatic/astro`.
+**No CMS / no Netlify adapter — fully static**
+No Keystatic, React, or Netlify adapter is installed. The site builds with
+`output: 'static'` and no `adapter`, producing plain HTML that Netlify serves
+directly (no SSR functions). Keystatic was trialled (it *does* work with Astro 6
+via `@keystatic/astro@5.1.0+`) but removed on 2026-07-01 — do not re-add
+`@keystatic/*`, `@astrojs/react`, or `@astrojs/netlify` without an explicit
+decision to bring back a CMS.
 
 **CSS entry point**
 `src/styles/global.css` is the only CSS file. It uses Tailwind v4 syntax (`@import "tailwindcss"` + `@theme {}`). The old `src/assets/styles/` folder from AstroWind was deleted. Do not create new CSS files — all styling goes through Tailwind utility classes or the `@theme {}` block.
@@ -710,4 +721,12 @@ The content collection config is at `src/content.config.ts` (project root of src
 
 ---
 
-*Last updated: May 2026. Update this file whenever a new decision is made or pattern established.*
+*Last updated: July 2026. Update this file whenever a new decision is made or pattern established.*
+
+> **Known doc drift to reconcile (July 2026):** parts of this file above still
+> describe the *intended* template, not the *current* build. Verify against the
+> repo before relying on: blog uses flat `src/content/blog/*.mdx` (not year
+> folders) and the schema is `title / publishDate / excerpt / tags / draft`
+> (not `date / description / category`); section spacing is `SectionWrapper`
+> (not `WidgetWrapper`); OG image generation, podcast collection, `LandingLayout`,
+> `BlogLayout`, and category/tag pages are specced but **not yet built**.
